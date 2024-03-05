@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article API Demo</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .response {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Article API Demo</h1>
+    <form id="apiForm">
+      <input type="text" id="apiRoute" placeholder="API Route" required>
+      <select id="httpMethod">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="DELETE">DELETE</option>
+      </select>
+      <input type="text" id="title" placeholder="Title">
+      <textarea id="content" placeholder="Content" rows="4"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="response" id="response"></div>
+  </div>
+
+  <script>
+    document.getElementById('apiForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const apiRoute = document.getElementById('apiRoute').value;
+      const httpMethod = document.getElementById('httpMethod').value;
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+
+      let requestOptions = {
+        method: httpMethod
+      };
+
+      if (httpMethod === 'POST') {
+        requestOptions.headers = { 'Content-Type': 'application/json' };
+        requestOptions.body = JSON.stringify({ title, content });
+      }
+
+      fetch(apiRoute, requestOptions)
+        .then(response => {
+          document.getElementById('response').textContent = `Response Status: ${response.status} ${response.statusText}`;
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById('response').textContent += '\nResponse Data:\n' + JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById('response').textContent = 'Error: ' + error.message;
+        });
+    });
+  </script>
+</body>
+</html>

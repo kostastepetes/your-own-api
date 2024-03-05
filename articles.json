@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "1",
+    "title": "First Article",
+    "content": "This is the content of the first article."
+  },
+  {
+    "_id": "2",
+    "title": "Second Article",
+    "content": "This is the content of the second article."
+  },
+  {
+    "_id": "3",
+    "title": "Third Article",
+    "content": "This is the content of the third article."
+  }
+]
